@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Of Life</title>
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div id="game"></div>
+
+<div class="panel">
+    <div class="button_group">
+        <button class="js-fill-button" type="button">fill the world</button>
+        <button class="js-clear-button" type="button">clear the world</button>
+    </div>
+    <div class="button_group">
+        <button class="js-start-button" type="button">start</button>
+        <button class="js-pause-button" type="button">pause</button>
+        <button class="js-stop-button" type="button">stop</button>
+    </div>
+    <div class="button_group">
+        <button class="js-backward-button" type="button">backward</button>
+        <button class="js-forward-button" type="button">forward</button>
+    </div>
+    <div class="button_group">
+        <button class="js-clean-history-button" type="button">clean up history</button>
+    </div>
+
+    <label class="speed-control">
+        <input class="js-period-input" type="range">
+        <span class="js-period-output">Cycle duration:  (ms)</span>
+    </label>
+
+    <select class="js-figure-select">
+        <option value="" selected disabled>Choose a figure to insert...</option>
+    </select>
+</div>
+
+<div class="renderer-menu">
+    <h1>Choose a way to render game</h1>
+</div>
+
+</body>
+</html>
