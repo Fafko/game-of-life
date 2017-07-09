@@ -16,12 +16,12 @@ Current implementation features:
 5. You can control the game cycle duration with the corresponding slider.
 6. Cell's state can be toggled by clicking on cell.
 7. You can navigate forward and backward on the history with the corresponding buttons **Forward** and **Backward**.
-    When the button **Stop** is pressed - all previous history is deleted because we reset the game to its initial state.
+    When the button **Stop** is pressed - all previous history will be deleted because we reset the game to its initial state.
     When history records number is more than 1000 - You will be suggested to clean up the history with the 
     **Clean Up History** button.
-8. You can paste some popular patterns into the world
+8. You can add some popular patterns into the world
     (The world will be cleared and chosen pattern will be placed on the center of the world.)
-    The pattern will be pasted if you choose it in the **Choose a figure to insert...** list.
+    The pattern will be added if you choose it in the **Choose a figure to insert...** list.
     Available patterns are stored in text format in the `./src/js/Figures/templates/` folder.
     You can add your own patterns to the game. You should create new file with your 
     pattern and save it to the corresponding folder, after that you should add this file to the register 
