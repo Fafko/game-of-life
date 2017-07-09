@@ -2484,8 +2484,9 @@ var CanvasRenderer = function (_AbstractRenderer) {
 
     var _this = _possibleConstructorReturn(this, (CanvasRenderer.__proto__ || Object.getPrototypeOf(CanvasRenderer)).call(this));
 
-    _this.POINT_HEIGHT = 2;
-    _this.POINT_WIDTH = 2;
+    _this.SCALE_RATIO = window.devicePixelRatio || 1;
+    _this.POINT_HEIGHT = 2 * _this.SCALE_RATIO;
+    _this.POINT_WIDTH = 2 * _this.SCALE_RATIO;
     _this._node = document.createElement('canvas');
     _this._node.className = 'canvas-renderer';
     _this._isInitialized = false;
@@ -2562,6 +2563,8 @@ var CanvasRenderer = function (_AbstractRenderer) {
       this._width = this.POINT_WIDTH * width;
       this._node.setAttribute('height', '' + this._height);
       this._node.setAttribute('width', '' + this._width);
+      this._node.style.height = this._height / this.SCALE_RATIO + 'px';
+      this._node.style.width = this._width / this.SCALE_RATIO + 'px';
       this._context = this._node.getContext('2d');
 
       this._isInitialized = true;
@@ -2598,7 +2601,7 @@ var CanvasRenderer = function (_AbstractRenderer) {
 
       var styles = document.createElement('style');
 
-      styles.innerHTML += '\n      .canvas-renderer {\n        display: inline-block;\n        border: 1px solid rgb(125, 202, 74);\n      }';
+      styles.innerHTML += '\n      .canvas-renderer {\n        display: inline-block;\n        border: 1px solid rgb(125, 202, 74);\n        box-sizing: content-box;\n      }';
 
       return styles;
     }
