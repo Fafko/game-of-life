@@ -99,8 +99,8 @@ export default class CanvasRenderer extends AbstractRenderer {
    */
   _getPointCoordsByEventCoords(x, y) {
     return {
-      x: Math.ceil(x / this.POINT_WIDTH) - 1,
-      y: Math.ceil(y / this.POINT_HEIGHT) - 1
+      x: Math.ceil(x / this.POINT_WIDTH * this.SCALE_RATIO) - 1,
+      y: Math.ceil(y / this.POINT_HEIGHT * this.SCALE_RATIO) - 1
     }
   }
 
