@@ -24,6 +24,7 @@ export default class CssRenderer extends AbstractRenderer {
       let width = world.getWidth();
       let height = world.getHeight();
       let worldStyle = '';
+      let pointWidthAsPercent = 100 / world.getWidth();
 
       for (let y = 0; y < height; y += 1) {
 
@@ -38,17 +39,17 @@ export default class CssRenderer extends AbstractRenderer {
           if (previousColor) {
 
             if (previousColor !== color) {
-              rowStyle += `, ${previousColor} ${x * this.POINT_WIDTH}px, ${color} ${x * this.POINT_WIDTH}px`;
+              rowStyle += `, ${previousColor} ${x * pointWidthAsPercent}%, ${color} ${x * pointWidthAsPercent}%`;
               previousColor = color;
             }
 
           } else {
             previousColor = color;
-            rowStyle += `, ${color} ${x * this.POINT_WIDTH}px`;
+            rowStyle += `, ${color} ${x * pointWidthAsPercent}%`;
           }
 
         }
-        rowStyle += `, ${previousColor} ${width * this.POINT_WIDTH}px`;
+        rowStyle += `, ${previousColor} ${width * pointWidthAsPercent}%`;
         rowStyle += `);} \n`;
         worldStyle += rowStyle;
 
