@@ -2670,6 +2670,7 @@ var CssRenderer = function (_AbstractRenderer) {
         var width = world.getWidth();
         var height = world.getHeight();
         var worldStyle = '';
+        var pointWidthAsPercent = 100 / world.getWidth();
 
         for (var y = 0; y < height; y += 1) {
 
@@ -2684,15 +2685,15 @@ var CssRenderer = function (_AbstractRenderer) {
             if (previousColor) {
 
               if (previousColor !== color) {
-                rowStyle += ', ' + previousColor + ' ' + x * this.POINT_WIDTH + 'px, ' + color + ' ' + x * this.POINT_WIDTH + 'px';
+                rowStyle += ', ' + previousColor + ' ' + x * pointWidthAsPercent + '%, ' + color + ' ' + x * pointWidthAsPercent + '%';
                 previousColor = color;
               }
             } else {
               previousColor = color;
-              rowStyle += ', ' + color + ' ' + x * this.POINT_WIDTH + 'px';
+              rowStyle += ', ' + color + ' ' + x * pointWidthAsPercent + '%';
             }
           }
-          rowStyle += ', ' + previousColor + ' ' + width * this.POINT_WIDTH + 'px';
+          rowStyle += ', ' + previousColor + ' ' + width * pointWidthAsPercent + '%';
           rowStyle += ');} \n';
           worldStyle += rowStyle;
         }
