@@ -119,7 +119,7 @@ export default class CssRenderer extends AbstractRenderer {
     styles.innerHTML += `
       .css-renderer {
         display: inline-block;
-        border: 1px solid rgb(125, 202, 74);
+        border: 1px solid #b2b2b2;
       }`;
     styles.innerHTML += `
       .css-renderer__row {

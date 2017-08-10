@@ -109,7 +109,7 @@ export default class HtmlRenderer extends AbstractRenderer {
     styles.innerHTML += `
       .html-renderer {
         display: inline-block;
-        border: 1px solid rgb(125, 202, 74);
+        border: 1px solid #b2b2b2;
       }`;
     styles.innerHTML += `
       .html-renderer__row {

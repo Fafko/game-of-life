@@ -12,12 +12,29 @@ body * {
 }
 
 select {
-    height: 30px;
+    max-width: 100%;
+    width: 100%;
+    padding: 0 30px 0 10px;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    transition: .2s ease-in-out border;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTVweCIgaGVpZ2h0PSIxMHB4IiB2aWV3Qm94PSIwIDAgMTUgMTAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ2LjEgKDQ0NDYzKSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5UcmlhbmdsZTwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxwb2x5Z29uIGlkPSJUcmlhbmdsZSIgZmlsbD0iIzY2NjY2NiIgcG9pbnRzPSI3LjEyNSAxMCAwIDAgMTQuMjUgMCI+PC9wb2x5Z29uPgogICAgPC9nPgo8L3N2Zz4=');
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 0;
     font-size: 16px;
-    padding: 0 20px 0 10px;
-    line-height: 30px;
-    display: block;
-    border-radius: 5px;
+    cursor: pointer;
+}
+
+select:hover {
+    border-color: #b2b2b2;
 }
 
 select option {
@@ -28,22 +45,31 @@ select option {
 }
 
 button {
-    height: 30px;
-    font-size: 16px;
-    line-height: 30px;
-    vertical-align: top;
-    padding: 0 15px;
-    background: #3b9737;
-    color: white;
-    border: none;
-    text-transform: capitalize;
+    margin: 0;
+    border: 1px solid #e5e5e5;
+    overflow: visible;
+    font: inherit;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 30px;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: .2s ease-in-out border;
+    background: white;
+    color: #222;
     cursor: pointer;
-    margin-bottom: 10px;
-    border-radius: 5px;
 }
 
 button:hover {
-    background: #47c542;
+    border-color: #b2b2b2;
+}
+
+.button_group {
+    margin-bottom: 5px;
 }
 
 .panel {
@@ -58,16 +84,91 @@ button:hover {
 
 .speed-control {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    font-size: 0;
 }
 
-.speed-control input,
 .speed-control span {
     display: inline-block;
     vertical-align: middle;
     font-size: 16px;
-    margin: 0 10px 0 0;
     line-height: 30px;
+    width: 55%;
+    text-align: right;
+}
+
+.speed-control input {
+    box-sizing: border-box;
+    vertical-align: middle;
+    width: 45%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.speed-control input::-ms-track {
+    height: 15px;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+.speed-control input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-top: -7px;
+    height: 15px;
+    width: 15px;
+    border-radius: 500px;
+    background: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.speed-control input::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 500px;
+    background: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.speed-control input::-ms-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 500px;
+    background: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.speed-control input::-ms-tooltip {
+    display: none;
+}
+
+.speed-control input::-webkit-slider-runnable-track {
+    height: 3px;
+    background: #b2b2b2;
+    border-radius: 500px;
+}
+
+.speed-control input::-moz-range-track {
+    height: 3px;
+    background: #b2b2b2;
+    border-radius: 500px;
+}
+
+.speed-control input::-ms-fill-lower,
+.speed-control input::-ms-fill-upper {
+    height: 3px;
+    background: #b2b2b2;
+    border-radius: 500px;
 }
 
 .renderer-menu {

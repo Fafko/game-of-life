@@ -116,7 +116,7 @@ export default class CanvasRenderer extends AbstractRenderer {
     styles.innerHTML += `
       .canvas-renderer {
         display: inline-block;
-        border: 1px solid rgb(125, 202, 74);
+        border: 1px solid #b2b2b2;
         box-sizing: content-box;
       }`;
 
