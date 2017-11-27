@@ -1,13 +1,14 @@
 import AbstractRenderer from './AbstractRenderer';
 
-export default class HtmlRenderer extends AbstractRenderer {
+export default class SvgRendered extends AbstractRenderer {
 
   constructor() {
     super();
     this.POINT_HEIGHT = 2;
     this.POINT_WIDTH = 2;
-    this._node = document.createElement('div');
-    this._node.className = 'html-renderer';
+    this._node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this._node.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+    this._node.setAttribute('class', 'svg-renderer');
     this._isInitialized = false;
     this._pointLinks = [];
     this._previousWorldData = [];
@@ -31,7 +32,7 @@ export default class HtmlRenderer extends AbstractRenderer {
           let index = world.getPointIndexByCoords(x, y);
 
           if (this._previousWorldData[index] !== worldData[index]) {
-            this._pointLinks[index].style.backgroundColor = worldData[index] ? 'black' : 'white';
+            this._pointLinks[index].setAttribute('fill', worldData[index] ? 'black' : 'white');
             this._previousWorldData[index] = worldData[index];
           }
 
@@ -58,27 +59,25 @@ export default class HtmlRenderer extends AbstractRenderer {
     let fragment = document.createDocumentFragment();
 
     for (let y = 0; y < height; y += 1) {
-
-      let htmlRow = document.createElement('div');
-      htmlRow.className = 'html-renderer__row';
-
       for (let x = 0; x < width; x += 1) {
 
-        let htmlPoint = document.createElement('div');
+        let svgPoint = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
         let index = world.getPointIndexByCoords(x, y);
-        htmlPoint.className = 'html-renderer__point';
-        htmlRow.appendChild(htmlPoint);
-        htmlPoint.style.backgroundColor = worldData[index] ? 'black' : 'white';
-        this._pointLinks[index] = htmlPoint;
+        svgPoint.setAttribute('fill', worldData[index] ? 'black' : 'white');
+        svgPoint.setAttribute('x', `${x * this.POINT_WIDTH}px`);
+        svgPoint.setAttribute('y', `${y * this.POINT_WIDTH}px`);
+        svgPoint.setAttribute('width', `${this.POINT_WIDTH}px`);
+        svgPoint.setAttribute('height', `${this.POINT_WIDTH}px`);
+        this._pointLinks[index] = svgPoint;
         this._previousWorldData[index] = worldData[index];
+        fragment.appendChild(svgPoint);
 
       }
-
-      fragment.appendChild(htmlRow);
-
     }
 
     this._node.appendChild(fragment);
+    this._node.setAttribute('width', `${width * this.POINT_WIDTH}px`);
+    this._node.setAttribute('height', `${width * this.POINT_WIDTH}px`);
     this._isInitialized = true;
 
   }
@@ -107,20 +106,10 @@ export default class HtmlRenderer extends AbstractRenderer {
     let styles = document.createElement('style');
 
     styles.innerHTML += `
-      .html-renderer {
+      .svg-renderer {
         display: inline-block;
         border: 1px solid #b2b2b2;
-      }`;
-    styles.innerHTML += `
-      .html-renderer__row {
-        display: block;
-        overflow: hidden;
-      }`;
-    styles.innerHTML += `
-      .html-renderer__point {
-        height: ${this.POINT_HEIGHT}px; 
-        width: ${this.POINT_WIDTH}px; 
-        float: left;
+        box-sizing: content-box;
       }`;
 
     return styles;

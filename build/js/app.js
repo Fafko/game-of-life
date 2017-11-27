@@ -2842,8 +2842,8 @@ var HtmlRenderer = function (_AbstractRenderer) {
 
             if (this._previousWorldData[index] !== worldData[index]) {
               this._pointLinks[index].style.backgroundColor = worldData[index] ? 'black' : 'white';
+              this._previousWorldData[index] = worldData[index];
             }
-            this._previousWorldData[index] = worldData[index];
           }
         }
       } else {
@@ -3658,6 +3658,10 @@ var _CssRenderer = __webpack_require__(44);
 
 var _CssRenderer2 = _interopRequireDefault(_CssRenderer);
 
+var _SvgRendered = __webpack_require__(294);
+
+var _SvgRendered2 = _interopRequireDefault(_SvgRendered);
+
 var _Figure = __webpack_require__(40);
 
 var _Figure2 = _interopRequireDefault(_Figure);
@@ -3681,7 +3685,8 @@ var App = function () {
     this._avaliableRenderers = {
       'Html Renderer': _HtmlRenderer2.default,
       'Canvas Renderer': _CanvasRenderer2.default,
-      'Css Renderer': _CssRenderer2.default
+      'Css Renderer': _CssRenderer2.default,
+      'Svg Renderer': _SvgRendered2.default
     };
 
     this._showRendererVariants();
@@ -7356,6 +7361,160 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 294 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _AbstractRenderer2 = __webpack_require__(11);
+
+var _AbstractRenderer3 = _interopRequireDefault(_AbstractRenderer2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SvgRendered = function (_AbstractRenderer) {
+  _inherits(SvgRendered, _AbstractRenderer);
+
+  function SvgRendered() {
+    _classCallCheck(this, SvgRendered);
+
+    var _this = _possibleConstructorReturn(this, (SvgRendered.__proto__ || Object.getPrototypeOf(SvgRendered)).call(this));
+
+    _this.POINT_HEIGHT = 2;
+    _this.POINT_WIDTH = 2;
+    _this._node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    _this._node.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+    _this._node.setAttribute('class', 'svg-renderer');
+    _this._isInitialized = false;
+    _this._pointLinks = [];
+    _this._previousWorldData = [];
+    return _this;
+  }
+
+  /**
+   * Render the given word
+   * @param {World} world
+   */
+
+
+  _createClass(SvgRendered, [{
+    key: 'render',
+    value: function render(world) {
+
+      if (this._isInitialized) {
+
+        var worldData = world.getState();
+        var width = world.getWidth();
+        var height = world.getHeight();
+
+        for (var y = 0; y < height; y += 1) {
+          for (var x = 0; x < width; x += 1) {
+
+            var index = world.getPointIndexByCoords(x, y);
+
+            if (this._previousWorldData[index] !== worldData[index]) {
+              this._pointLinks[index].setAttribute('fill', worldData[index] ? 'black' : 'white');
+              this._previousWorldData[index] = worldData[index];
+            }
+          }
+        }
+      } else {
+        this._init(world);
+      }
+    }
+
+    /**
+     * Init renderer data
+     * @param {World} world
+     * @private
+     */
+
+  }, {
+    key: '_init',
+    value: function _init(world) {
+
+      var worldData = world.getState();
+      var width = world.getWidth();
+      var height = world.getHeight();
+
+      var fragment = document.createDocumentFragment();
+
+      for (var y = 0; y < height; y += 1) {
+        for (var x = 0; x < width; x += 1) {
+
+          var svgPoint = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
+          var index = world.getPointIndexByCoords(x, y);
+          svgPoint.setAttribute('fill', worldData[index] ? 'black' : 'white');
+          svgPoint.setAttribute('x', x * this.POINT_WIDTH + 'px');
+          svgPoint.setAttribute('y', y * this.POINT_WIDTH + 'px');
+          svgPoint.setAttribute('width', this.POINT_WIDTH + 'px');
+          svgPoint.setAttribute('height', this.POINT_WIDTH + 'px');
+          this._pointLinks[index] = svgPoint;
+          this._previousWorldData[index] = worldData[index];
+          fragment.appendChild(svgPoint);
+        }
+      }
+
+      this._node.appendChild(fragment);
+      this._node.setAttribute('width', width * this.POINT_WIDTH + 'px');
+      this._node.setAttribute('height', width * this.POINT_WIDTH + 'px');
+      this._isInitialized = true;
+    }
+
+    /**
+     * Calculate clicked point coordinates by click event coordinates
+     * @param {number} x
+     * @param {number} y
+     * @returns {{x: number, y: number}}
+     * @private
+     */
+
+  }, {
+    key: '_getPointCoordsByEventCoords',
+    value: function _getPointCoordsByEventCoords(x, y) {
+      return {
+        x: Math.ceil(x / this.POINT_WIDTH) - 1,
+        y: Math.ceil(y / this.POINT_HEIGHT) - 1
+      };
+    }
+
+    /**
+     * Return renderer styles
+     * @returns {Element}
+     * @private
+     */
+
+  }, {
+    key: '_getStylesheets',
+    value: function _getStylesheets() {
+
+      var styles = document.createElement('style');
+
+      styles.innerHTML += '\n      .svg-renderer {\n        display: inline-block;\n        border: 1px solid #b2b2b2;\n        box-sizing: content-box;\n      }';
+
+      return styles;
+    }
+  }]);
+
+  return SvgRendered;
+}(_AbstractRenderer3.default);
+
+exports.default = SvgRendered;
 
 /***/ })
 /******/ ]);

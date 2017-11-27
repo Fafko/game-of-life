@@ -2,6 +2,7 @@ import Game from './Game/Game';
 import HtmlRenderer from './Renderer/HtmlRenderer';
 import CanvasRenderer from './Renderer/CanvasRenderer';
 import CssRenderer from './Renderer/CssRenderer';
+import SvgRenderer from './Renderer/SvgRendered';
 import Figure from './Figures/Figure';
 import figures from './Figures/templates';
 import {INITIAL_CYCLE_PERIOD, MIN_CYCLE_PERIOD, MAX_CYCLE_PERIOD} from './config';
@@ -14,7 +15,8 @@ class App {
     this._avaliableRenderers = {
       'Html Renderer': HtmlRenderer,
       'Canvas Renderer': CanvasRenderer,
-      'Css Renderer': CssRenderer
+      'Css Renderer': CssRenderer,
+      'Svg Renderer': SvgRenderer,
     };
 
     this._showRendererVariants();
